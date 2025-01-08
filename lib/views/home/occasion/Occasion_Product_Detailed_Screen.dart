@@ -145,16 +145,20 @@ class ProductDetailScreen extends StatelessWidget {
                           ],
                         ),
                         SizedBox(height: 8.h),
-                        Row(
-                          children: [
-                            Text(
-                              'Weight: ${product.weight}gm',
-                              style: TextStyle(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight
-                                      .w500), // Use ScreenUtil for font size
-                            ),
-                          ],
+                        Text(
+                          'Weight: ${product.weight}gm',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight
+                                  .w500), // Use ScreenUtil for font size
+                        ),
+                        SizedBox(height: 8.h),
+                          Text(
+                          'MakingCharge: ${product.wastage}%',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              fontWeight: FontWeight
+                                  .w500), // Use ScreenUtil for font size
                         ),
                         SizedBox(height: 8.h),
                         Text(
@@ -229,7 +233,7 @@ class ProductDetailScreen extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 16.sp, // Use ScreenUtil for font size
                                 fontWeight: FontWeight.bold,
-                                color: kDark,
+                               
                               ),
                             ),
                           ],

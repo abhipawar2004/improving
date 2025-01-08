@@ -111,7 +111,7 @@ class LightProductScreen extends StatelessWidget {
                                 right: 10.w,
                                 child: Badge(
                                   value: karat.toString(),
-                                  color: Colors.red,
+                                  color: golden,
                                 ),
                               ),
                               Positioned(
@@ -119,7 +119,7 @@ class LightProductScreen extends StatelessWidget {
                                 left: 10.w,
                                 child: Badge(
                                   value: weight.toString() + 'gm',
-                                  color: Colors.blue.withOpacity(0.7),
+                                  color: lightgrey,
                                 ),
                               ),
                             ],

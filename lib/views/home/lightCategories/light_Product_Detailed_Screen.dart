@@ -56,212 +56,196 @@ class LightDetailScreen extends StatelessWidget {
           final userId = snapshot.data ?? 'Unknown';
 
           return Scaffold(
-            appBar: AppBar(
-              title: Text(
-                product.categoryName,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20.sp, // Use ScreenUtil for font size
-                  color: Colors.white,
-                  letterSpacing: 1.2,
-                  shadows: [
-                    Shadow(
-                      blurRadius: 10.0,
-                      color: Colors.black.withOpacity(0.5),
-                      offset: Offset(2.w, 2.h),
-                    ),
-                  ],
-                ),
-              ),
-              centerTitle: true,
-              backgroundColor: kDark,
-              automaticallyImplyLeading: false,
-            ),
-            body: SingleChildScrollView(
-              padding: EdgeInsets.all(16.w),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // Horizontal Image Slider
-                  Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(12.r),
-                        child: SizedBox(
-                          height: 240.h,
-                          child: PageView.builder(
-                            controller: controller.pageController,
-                            onPageChanged: (index) =>
-                                controller.currentImageIndex.value = index,
-                            itemCount: product.imageUrls.length,
-                            itemBuilder: (context, index) {
-                              return CachedNetworkImage(
-                                imageUrl: product.imageUrls[index],
-                                height: 220.h,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorWidget: (context, error, url) =>
-                                    Icon(Icons.broken_image, size: 220.h),
-                              );
-                            },
+            body: SafeArea(
+              child: SingleChildScrollView(
+                padding: EdgeInsets.all(16.w),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Horizontal Image Slider
+                    Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(3.r),
+                          child: SizedBox(
+                            height: 240.h,
+                            child: PageView.builder(
+                              controller: controller.pageController,
+                              onPageChanged: (index) =>
+                                  controller.currentImageIndex.value = index,
+                              itemCount: product.imageUrls.length,
+                              itemBuilder: (context, index) {
+                                return CachedNetworkImage(
+                                  imageUrl: product.imageUrls[index],
+                                  height: 220.h,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorWidget: (context, error, url) =>
+                                      Icon(Icons.broken_image, size: 220.h),
+                                );
+                              },
+                            ),
                           ),
                         ),
-                      ),
-                      Obx(() => Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children:
-                              List.generate(product.imageUrls.length, (index) {
-                            return AnimatedContainer(
-                              duration: Duration(milliseconds: 300),
-                              margin: EdgeInsets.symmetric(
-                                  horizontal: 4.w, vertical: 8.h),
-                              width: controller.currentImageIndex.value == index
-                                  ? 12.w
-                                  : 8.w,
-                              height:
-                                  controller.currentImageIndex.value == index
-                                      ? 12.h
-                                      : 8.h,
-                              decoration: BoxDecoration(
-                                color:
+                        Obx(() => Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: List.generate(product.imageUrls.length,
+                                (index) {
+                              return AnimatedContainer(
+                                duration: Duration(milliseconds: 300),
+                                margin: EdgeInsets.symmetric(
+                                    horizontal: 4.w, vertical: 8.h),
+                                width:
                                     controller.currentImageIndex.value == index
-                                        ? Colors.blue
-                                        : Colors.grey[300],
-                                shape: BoxShape.circle,
-                              ),
-                            );
-                          }))),
-                    ],
-                  ),
-                  SizedBox(height: 16.h),
+                                        ? 12.w
+                                        : 8.w,
+                                height:
+                                    controller.currentImageIndex.value == index
+                                        ? 12.h
+                                        : 8.h,
+                                decoration: BoxDecoration(
+                                  color: controller.currentImageIndex.value ==
+                                          index
+                                      ? const Color.fromARGB(255, 255, 255, 255)
+                                      : Colors.grey[300],
+                                  shape: BoxShape.circle,
+                                ),
+                              );
+                            }))),
+                      ],
+                    ),
+                    SizedBox(height: 16.h),
 
-                  // Product Name
-                  Center(
-                    child: Text(
-                      product.productName,
-                      style: TextStyle(
-                        fontSize: 24.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                    // Product Name
+                    Center(
+                      child: Text(
+                        product.productName,
+                        style: TextStyle(
+                          fontSize: 24.sp,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16.h),
+                    SizedBox(height: 16.h),
 
-                  // Product Details
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.r),
-                    ),
-                    elevation: 4,
-                    margin: EdgeInsets.symmetric(vertical: 8.h),
-                    child: Padding(
+                    // Product Details
+                    Padding(
                       padding: EdgeInsets.all(16.w),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
-                            children: [
-                              Icon(Icons.star,
-                                  color: Colors.orange, size: 18.sp),
-                              SizedBox(width: 8.w),
-                              Text(
-                                'Karat: ${product.karat}',
-                                style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: 8.h),
-                          Row(
-                            children: [
-                              Icon(Icons.scale,
-                                  color: Colors.teal, size: 18.sp),
-                              SizedBox(width: 8.w),
-                              Text(
-                                'Weight: ${product.weight}gm',
-                                style: TextStyle(
-                                    fontSize: 14.sp,
-                                    fontWeight: FontWeight.w500),
-                              ),
-                            ],
+                          Text(
+                            'Karat: ${product.karat}',
+                            style: TextStyle(
+                                fontSize: 14.sp, fontWeight: FontWeight.w500),
                           ),
                           SizedBox(height: 8.h),
                           Text(
-                            'Description:',
+                            'Weight: ${product.weight}gm',
                             style: TextStyle(
-                                fontSize: 14.sp, fontWeight: FontWeight.bold),
+                                fontSize: 14.sp, fontWeight: FontWeight.w500),
                           ),
-                          SizedBox(height: 4.h),
+                          SizedBox(height: 8.h),
                           Text(
-                            product.description,
+                            'MakingCharge: ${product.wastage}%',
                             style: TextStyle(
-                                fontSize: 12.sp, color: Colors.grey[700]),
+                                fontSize: 14.sp, fontWeight: FontWeight.w500),
+                          ),
+                          SizedBox(height: 8.h),
+                          Text(
+                            'Description: ${product.description}',
+                            style: TextStyle(
+                                fontSize: 14.sp, fontWeight: FontWeight.w500),
                           ),
                           SizedBox(height: 14.h),
-                          Text(
-                            'Verified by Bansal & Sons Jewellers Pvt Ltd',
-                            style: TextStyle(
-                              fontSize: 14.sp,
-                              fontWeight: FontWeight.bold,
-                              color: kDark,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () =>
+                                      _launchUrl('https://wa.me/+9191982031621'),
+                                  icon: Image.asset(
+                                    'assets/icons/whatsapp.png',
+                                     // Use ScreenUtil for width
+                                    height: 14.h, // Use ScreenUtil for height
+                                  ),
+                                  label: Expanded(
+                                    child: Text(
+                                      'Click WhatsApp to ask!',
+                                      style: TextStyle(color: Colors.green,fontSize: 8.sp),
+                                      
+                                    ),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    fixedSize: Size(160.w, 15.h),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                     side:  BorderSide(color: Colors.green, width: 2.w),
+                                      borderRadius: BorderRadius.circular(
+                                        8.r,
+                                      ), // Use ScreenUtil for radius
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 10.w),
+                                ElevatedButton.icon(
+                                  onPressed: () => _launchUrl('tel:+9191982031621'),
+                                  icon: Icon(Icons.phone, color: Colors.green,size:14.h,),
+                                  label: Text(
+                                    'Click to Call!',
+                                    style: TextStyle(color: Colors.green,fontSize: 8.sp),
+                                  ),
+                                  style: ElevatedButton.styleFrom(
+                                    side: BorderSide(color: Colors.green, width: 2.w),
+                                    backgroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                          8.r), // Use ScreenUtil for radius
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
+                        SizedBox(height: 8.h,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Icon(
+                                Icons.verified,
+                                color: kPrimary,
+                              ),
+                              SizedBox(width: 8.w),
+                              Text(
+                                'Bansal & Sons Jewellers Pvt Ltd',
+                                style: TextStyle(
+                                  fontSize: 14.sp,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                  ),
-                  SizedBox(height: 16.h),
+ 
+                    SizedBox(height: 16.h),
 
-                  // WhatsApp and Call Buttons
-                  Row(
-                    children: [
-                      ElevatedButton.icon(
-                        onPressed: () =>
-                            _launchUrl('https://wa.me/+9191982031621'),
-                        icon: Image.asset(
-                          'assets/icons/whatsapp.png',
-                          width: 20.w,
-                          height: 20.h,
-                        ),
-                        label: Text('WhatsApp'),
-                        style: ElevatedButton.styleFrom(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 10.w),
-                      ElevatedButton.icon(
-                        onPressed: () => _launchUrl('tel:+9191982031621'),
-                        icon: Icon(Icons.phone, color: Colors.white),
-                        label: Text('Call'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.green,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16.h),
-
-                  CustomButton(
-                    label: 'Add to Cart',
-                    onPressed: () {
-                      cartController.addToCart(
-                          userId, product.productId.toString());
-                    },
-                    width: 1.sw, // Use full screen width
-                    height: 50.h,
-                    color: kDark,
-                    fontSize: 18.sp,
-                    textColor: Colors.white,
-                  ),
-                ],
+                    CustomButton(
+                      label: 'Add to Wishlist',
+                      onPressed: () {
+                        cartController.addToCart(
+                            userId, product.productId.toString());
+                      },
+                      width: 1.sw, // Use full screen width
+                      height: 50.h,
+                      color: kDark,
+                      fontSize: 18.sp,
+                      textColor: Colors.white,
+                    ),
+                  ],
+                ),
               ),
             ),
           );

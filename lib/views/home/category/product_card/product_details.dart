@@ -152,7 +152,18 @@ class ProductDetails extends StatelessWidget {
                             Row(
                               children: [
                                 Text(
-                                  'Weight: ${product.weight}',
+                                  'Weight: ${product.weight}gm',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                              ],
+                            ),
+                             SizedBox(height: 8),
+                            Row(
+                              children: [
+                                Text(
+                                  'MakingCharge: ${product.wastage}%',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500),
